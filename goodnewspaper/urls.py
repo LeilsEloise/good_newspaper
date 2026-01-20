@@ -17,7 +17,6 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from newstories.views import news_story
 
 urlpatterns = [
     path('admin/', admin.site.urls),
