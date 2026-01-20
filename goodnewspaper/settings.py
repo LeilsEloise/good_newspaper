@@ -27,7 +27,9 @@ DEBUG = False
 
 APPEND_SLASH = True
 
-ALLOWED_HOSTS = ['127.0.0.1',]
+ALLOWED_HOSTS = ['good-newspaper-0da132e1e05e.herokuapp.com',
+    'localhost',
+    '127.0.0.1',]
 
 
 # Application definition
