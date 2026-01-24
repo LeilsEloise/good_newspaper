@@ -4,5 +4,6 @@ from .models import Article
 
 # Create your views here.
 class ArticleList(generic.ListView):
-    queryset = Article.objects.all()
-    template_name = "article_list.html"
+    queryset = Article.objects.filter(status=1).order_by("-created_on")
+    template_name = "newstories/index.html"
+    paginate_by = 6

@@ -1,0 +1,47 @@
+<!-- ChatGPT Code -->
+{% extends "base.html" %}
+
+{% block title %}
+Good Newspaper | Home
+{% endblock title %}
+
+{% block content %}
+
+<div class="text-center mb-5">
+    <h1 class="fw-bold">Good News Only 📰</h1>
+    <p class="text-muted">
+        A collection of positive stories to brighten your day
+    </p>
+</div>
+
+{% if article_list %}
+    <div class="row">
+        {% for article in article_list %}
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">
+                            {{ article.title }}
+                        </h5>
+
+                        <p class="card-text text-muted">
+                            {{ article.excerpt }}
+                        </p>
+
+                        <div class="mt-auto">
+                            <small class="text-muted">
+                                Published {{ article.created_on|date:"F j, Y" }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="text-center">
+        <p>No positive stories yet — check back soon 🌱</p>
+    </div>
+{% endif %}
+
+{% endblock content %}
