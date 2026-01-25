@@ -1,0 +1,30 @@
+/*ChatGPT Code */
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+.brand {
+    font-weight: 700;
+    font-size: 1.4rem;
+}
+
+.green-o {
+    color: #2e7d32;
+}
+
+.thin {
+    font-weight: 300;
+}
+
+.main-bg {
+    background-color: #f5fdf7;
+}
+
+.dark-bg {
+    background-color: #2e7d32;
+}
+
+.navbar-light .navbar-nav .nav-link.active {
+    font-weight: 700;
+    color: #2e7d32;
+}
