@@ -1,7 +1,7 @@
 <!-- ChatGPT created the base.html code to save time -->
 {% load static %}
 
-{% url 'home' as home_url %}
+{% url 'newstories:home' as home_url %}
 
 <!DOCTYPE html>
 <html class="h-100" lang="en">
@@ -32,7 +32,8 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'home' %}">
+            <!-- ChatGPT Code -->
+            <a class="navbar-brand" href="{% url 'newstories:home' %}">
                 <span class="brand">
                     good<span class="green-o">|</span>news<span class="thin">paper</span>
                 </span>
@@ -47,8 +48,7 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == home_url %}active{% endif %}"
-                           href="{% url 'home' %}">
+                        <a class="navbar-brand" href="{% url 'newstories:home' %}">
                             Home
                         </a>
                     </li>
