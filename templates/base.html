@@ -3,6 +3,8 @@
 
 {% url 'newstories:home' as home_url %}
 
+{% url 'about:about' as about_url %}
+
 <!DOCTYPE html>
 <html class="h-100" lang="en">
 
@@ -50,6 +52,11 @@
                     <li class="nav-item">
                         <a class="navbar-brand" href="{% url 'newstories:home' %}">
                             Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == about_url %}active{% endif %}" href="{{ about_url }}">
+                            About
                         </a>
                     </li>
                 </ul>
