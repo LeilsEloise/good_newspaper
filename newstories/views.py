@@ -1,35 +1,32 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic
 from django.contrib import messages
-from .models import Article
+from django.db.models import Q
+from django.http import HttpResponseRedirect
+from .models import Article, Comment
 from .forms import CommentForm
 
-# Create your views here.
+
 class ArticleList(generic.ListView):
     queryset = Article.objects.filter(status=1).order_by("-created_on")
     template_name = "newstories/index.html"
     paginate_by = 6
 
+
 def article_detail(request, slug):
-    """
-    Display an individual :model:`newstories.Article`.
-
-    **Context**
-
-    ``post``
-        An instance of :model:`newstories.Article`.
-
-    **Template:**
-
-    :template:`newstories/article_detail.html`
-    """
-
     queryset = Article.objects.filter(status=1)
     article = get_object_or_404(queryset, slug=slug)
+#ChatGPT Unapproved Comments Code
+    if request.user.is_authenticated:
+        comments = article.comments.filter(
+            Q(approved=True) | Q(author=request.user)
+        ).order_by("-created_on")
+    else:
+        comments = article.comments.filter(
+            approved=True
+        ).order_by("-created_on")
 
-    comments = article.comments.filter(approved=True).order_by("-created_on")
-    comment_count = comments.count()
-
+    comment_count = article.comments.filter(approved=True).count()
     comment_form = CommentForm()
 
     if request.method == "POST":
@@ -39,12 +36,10 @@ def article_detail(request, slug):
             comment.author = request.user
             comment.article = article
             comment.save()
-            messages.add_message(
-                request, messages.SUCCESS,
-                'Comment submitted and awaiting approval'
+            messages.success(
+                request,
+                "Comment submitted and awaiting approval"
             )
-
-            # Reset form after successful submit
             comment_form = CommentForm()
 
     return render(

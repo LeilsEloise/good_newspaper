@@ -1,9 +1,10 @@
 <!-- ChatGPT created the base.html code to save time -->
-{% load static %} {% url 'newstories:home' as home_url %} {% url 'about:about'
-as about_url %}
+{% load static %} 
+{% url 'newstories:home' as home_url %} 
 
 <!-- Code Institute Code ACK-->
-{% url 'account_login' as login_url %} {% url 'account_signup' as signup_url %}
+{% url 'account_login' as login_url %} 
+{% url 'account_signup' as signup_url %}
 {% url 'account_logout' as logout_url %}
 
 <!doctype html>
@@ -71,12 +72,10 @@ as about_url %}
                 Home
               </a>
             </li>
+            <!-- ChatGPT Code-->
             <li class="nav-item">
-              <a
-                class="nav-link {% if request.path == about_url %}active{% endif %}"
-                href="{{ about_url }}"
-              >
-                About
+              <a class="nav-link {% if request.path == '/about/' %}active{% endif %}" href="{% url 'about:about' %}">
+              About
               </a>
             </li>
           </ul>
