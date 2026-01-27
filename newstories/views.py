@@ -24,9 +24,15 @@ def article_detail(request, slug):
 
     queryset = Article.objects.filter(status=1)
     article = get_object_or_404(queryset, slug=slug)
+    comments = article.comments.all().order_by("-created_on")
+    comment_count = article.comments.filter(approved=True).count()
 
     return render(
         request,
         "newstories/article_detail.html",
-        {"article": article },
+    {
+        "article": article,
+        "comments": comments,
+        "comment_count": comment_count,
+    },
     )
