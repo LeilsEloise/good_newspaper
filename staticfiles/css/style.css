@@ -1,4 +1,7 @@
 /*ChatGPT Code */
+
+/* version: 2026-01-28 */
+
 body {
     font-family: 'Lato', sans-serif;
 }
@@ -27,4 +30,31 @@ body {
 .navbar-light .navbar-nav .nav-link.active {
     font-weight: 700;
     color: #2e7d32;
+}
+
+/* Article images */
+.scale {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  display: block;
+}
+/* ChatGPT Code */
+/* Masthead image container */
+.masthead-image {
+  height: 300px;
+  overflow: hidden;
+}
+
+/* Masthead image */
+.masthead-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 767px) {
+  .masthead-image {
+    display: none;
+  }
 }
