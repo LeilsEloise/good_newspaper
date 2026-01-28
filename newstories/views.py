@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, reverse
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from django.contrib import messages
 from django.db.models import Q
@@ -52,3 +52,26 @@ def article_detail(request, slug):
             "comment_form": comment_form,
         },
     )
+
+#ChatGPT code
+def comment_edit(request, slug, comment_id):
+    """
+    Allow users to edit their own comments
+    """
+    article = get_object_or_404(Article, slug=slug, status=1)
+    comment = get_object_or_404(Comment, id=comment_id)
+
+    # Security check
+    if comment.author != request.user:
+        messages.error(request, "You can only edit your own comments.")
+        return redirect("newstories:article_detail", slug=slug)
+
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            edited_comment = form.save(commit=False)
+            edited_comment.approved = False  # re-moderation
+            edited_comment.save()
+            messages.success(request, "Comment updated successfully.")
+
+    return redirect("newstories:article_detail", slug=slug)
