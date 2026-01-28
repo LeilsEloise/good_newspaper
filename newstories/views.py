@@ -75,3 +75,20 @@ def comment_edit(request, slug, comment_id):
             messages.success(request, "Comment updated successfully.")
 
     return redirect("newstories:article_detail", slug=slug)
+
+#ChatGPT Code
+
+def comment_delete(request, slug, comment_id):
+    """
+    Delete a comment if the logged-in user is the author.
+    """
+    comment = get_object_or_404(Comment, id=comment_id)
+
+    # Security check: only the author can delete
+    if request.user == comment.author:
+        comment.delete()
+        messages.success(request, "Comment deleted successfully.")
+    else:
+        messages.error(request, "You are not authorised to delete this comment.")
+
+    return redirect("newstories:article_detail", slug=slug)
