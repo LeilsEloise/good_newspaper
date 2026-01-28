@@ -19,6 +19,12 @@ class Article(models.Model):
     
     class Meta:
         ordering = ["created_on"]
+    
+    #ChatGPT Vote Model code
+    def vote_total(self):
+        return self.votes.aggregate(
+            models.Sum("value")
+        )["value__sum"] or 0
 
     def __str__(self):
         return f"{self.title} | written by {self.author}"
@@ -37,3 +43,27 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment {self.body} by {self.author}"
+
+#Chat GPT Vote Model code    
+class ArticleVote(models.Model):
+    UPVOTE = 1
+    DOWNVOTE = -1
+
+    VOTE_CHOICES = (
+        (UPVOTE, "Upvote"),
+        (DOWNVOTE, "Downvote"),
+    )
+
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="article_votes"
+    )
+    article = models.ForeignKey(
+        Article, on_delete=models.CASCADE, related_name="votes"
+    )
+    value = models.SmallIntegerField(choices=VOTE_CHOICES)
+
+    class Meta:
+        unique_together = ("user", "article")
+
+    def __str__(self):
+        return f"{self.user} voted {self.value} on {self.article}"

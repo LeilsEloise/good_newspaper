@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import HttpResponseRedirect
-from .models import Article, Comment
+from .models import Article, Comment, ArticleVote
 from .forms import CommentForm
 
 
@@ -90,5 +91,25 @@ def comment_delete(request, slug, comment_id):
         messages.success(request, "Comment deleted successfully.")
     else:
         messages.error(request, "You are not authorised to delete this comment.")
+
+    return redirect("newstories:article_detail", slug=slug)
+
+#Chat GPT Vote Model Code
+@login_required
+def article_vote(request, slug, value):
+    article = get_object_or_404(Article, slug=slug, status=1)
+
+    vote, created = ArticleVote.objects.get_or_create(
+        user=request.user,
+        article=article,
+        defaults={"value": value},
+    )
+
+    if not created:
+        if vote.value == value:
+            vote.delete()  # clicking same vote removes it
+        else:
+            vote.value = value
+            vote.save()
 
     return redirect("newstories:article_detail", slug=slug)
