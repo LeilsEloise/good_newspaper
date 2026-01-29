@@ -28,7 +28,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 APPEND_SLASH = True
 
@@ -99,6 +99,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'goodnewspaper.wsgi.application'
 
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
