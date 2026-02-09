@@ -2,8 +2,18 @@
 
 /* version: 2026-01-28 */
 
+.heading {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 3rem;
+}
+
 body {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Playfair Display', sans-serif;
+}
+
+.leading-p {
+  font-size: 1.4rem;
 }
 
 .brand {
@@ -30,6 +40,19 @@ body {
 .navbar-light .navbar-nav .nav-link.active {
     font-weight: 700;
     color: #2e7d32;
+}
+
+/* Tidy-Up Code */
+
+/* Article links - ChatGPT */
+a {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #2e7d32;   /* optional: green hover to match your theme */
+  text-decoration: underline;
 }
 
 /* Article images */
@@ -63,3 +86,4 @@ body {
   height: 200px;
   object-fit: cover;
 }
+

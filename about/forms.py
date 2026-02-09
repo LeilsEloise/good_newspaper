@@ -3,14 +3,13 @@
 from django import forms
 from .models import CollaborateRequest
 
-
+# ChatGPT Code ACK
 class CollaborateForm(forms.ModelForm):
-    """
-    Form class for users to request a collaboration 
-    """
     class Meta:
-        """
-        Specify the django model and order of the fields
-        """
         model = CollaborateRequest
         fields = ('name', 'email', 'message')
+        widgets = {
+            "name": forms.TextInput(attrs={"class": "form-control"}),
+            "email": forms.EmailInput(attrs={"class": "form-control"}),
+            "message": forms.Textarea(attrs={"class": "form-control", "rows": 4}),
+        }
