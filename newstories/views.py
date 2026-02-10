@@ -1,11 +1,11 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.views import generic
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.http import HttpResponseRedirect
-from .models import Article, Comment, ArticleVote
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views import generic
+
 from .forms import CommentForm
+from .models import Article, ArticleVote, Comment
 
 
 class ArticleList(generic.ListView):
@@ -17,15 +17,13 @@ class ArticleList(generic.ListView):
 def article_detail(request, slug):
     queryset = Article.objects.filter(status=1)
     article = get_object_or_404(queryset, slug=slug)
-#ChatGPT Unapproved Comments Code
+    # ChatGPT Unapproved Comments Code
     if request.user.is_authenticated:
         comments = article.comments.filter(
             Q(approved=True) | Q(author=request.user)
         ).order_by("-created_on")
     else:
-        comments = article.comments.filter(
-            approved=True
-        ).order_by("-created_on")
+        comments = article.comments.filter(approved=True).order_by("-created_on")
 
     comment_count = article.comments.filter(approved=True).count()
     comment_form = CommentForm()
@@ -37,10 +35,7 @@ def article_detail(request, slug):
             comment.author = request.user
             comment.article = article
             comment.save()
-            messages.success(
-                request,
-                "Comment submitted and awaiting approval"
-            )
+            messages.success(request, "Comment submitted and awaiting approval")
             comment_form = CommentForm()
 
     return render(
@@ -54,7 +49,8 @@ def article_detail(request, slug):
         },
     )
 
-#ChatGPT code
+
+# ChatGPT code
 def comment_edit(request, slug, comment_id):
     """
     Allow users to edit their own comments
@@ -77,7 +73,9 @@ def comment_edit(request, slug, comment_id):
 
     return redirect("newstories:article_detail", slug=slug)
 
-#ChatGPT Code
+
+# ChatGPT Code
+
 
 def comment_delete(request, slug, comment_id):
     """
@@ -94,7 +92,8 @@ def comment_delete(request, slug, comment_id):
 
     return redirect("newstories:article_detail", slug=slug)
 
-#Chat GPT Vote Model Code
+
+# Chat GPT Vote Model Code
 @login_required
 def article_vote(request, slug, value):
     article = get_object_or_404(Article, slug=slug, status=1)
