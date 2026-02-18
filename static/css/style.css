@@ -87,3 +87,7 @@ a:hover {
   object-fit: cover;
 }
 
+/* ChatGPT - Hide label for the comment body field */
+label[for="id_body"] {
+    display: none;
+}
